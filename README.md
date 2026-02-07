@@ -39,9 +39,8 @@ Siga os passos abaixo para subir o ambiente:
 
 1.  **Clonar o projeto:**
     ```
-    ### AJUSTAR QUANDO SUBIR ### 
-    git clone [https://github.com/seu-usuario/recipedev.git](https://github.com/seu-usuario/recipedev.git)
-    cd recipedev
+    git clone [https://github.com/matheussantos-mob/private-chef.git](https://github.com/matheussantos-mob/private-chef.git)
+    cd private-chef
     ```
 
 2.  **Subir os containers:**
