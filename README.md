@@ -39,22 +39,34 @@ Siga os passos abaixo para subir o ambiente:
 
 1.  **Clonar o projeto:**
     ```
-    git clone [https://github.com/matheussantos-mob/private-chef.git](https://github.com/matheussantos-mob/private-chef.git)
+    git clone https://github.com/matheussantos-mob/private-chef.git
     cd private-chef
     ```
 
-2.  **Subir os containers:**
+2. **Instalação das Dependências (Vendor)**
+Como as dependências do Composer não são versionadas, utilize o comando abaixo para realizar a instalação inicial via Docker (necessário para ter acesso ao binário do Sail):
+```
+    docker run --rm -v ${PWD}:/var/www/html -w /var/www/html laravelsail/php82-composer:latest composer install --ignore-platform-reqs
+```
+
+3.  **Subir os containers:**
     ```
-    ./vendor/bin/sail up -d
+    bash vendor/bin/sail up -d
     ```
 
-3.  **Setup Automático:**
-    Execute o comando abaixo para configurar todo o ambiente automaticamente (instalação de dependências PHP/JS, configuração do .env, geração de chaves, link de storage, migrations com seeds e build de assets):
+4.  **Setup Automático:**
+    O projeto possui um script de setup que automatiza a criação do .env, geração de chaves, migrations, seeds e build dos assets (Vite).    
+    Nota para usuários Windows: Caso o comando via Sail retorne que o ambiente não está rodando, utilize o comando direto do Docker:    
     ```
-    ./vendor/bin/sail bin composer run setup
+    # Tente primeiro:
+    bash vendor/bin/sail composer run setup
+    ```
+    ```
+    # Caso a verificação do Sail falhe no Windows, utilize:
+    docker exec -it private-chef-laravel.test-1 composer run setup
     ```
 
-4.  **Acessar a aplicação:**
+5.  **Acessar a aplicação:**
     Abra no navegador: http://localhost
 
 
