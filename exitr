@@ -1,0 +1,21 @@
+[90m= [39m[34;4mApp\Models\Recipe[39;24m {#5373
+    [34mid[39m: [35m1[39m,
+    [34muser_id[39m: [35m3[39m,
+    [34mtitle[39m: "[32mLabore corporis et autem sit repudiandae.[39m",
+    [34mdescription[39m: "[32mEt quia iure in sit aut fugiat quae voluptatem. Non iste dignissimos natus voluptatibus et. Aut placeat ab natus totam aspernatur. Quae est commodi dignissimos praesentium enim animi. Sint repellat iste quo sit eveniet culpa nobis saepe.[39m",
+    [34mingredients[39m: "[32m["Ovo", "Farinha", "Leite", "Açúcar"][39m",
+    [34msteps[39m: "[32mEum eum sint sapiente consequatur eaque corporis quia quasi. Nesciunt est necessitatibus eligendi molestias ut. Ex quod possimus repellendus modi et omnis.[39m",
+    [34mcreated_at[39m: "[32m2026-02-06 19:41:58[39m",
+    [34mupdated_at[39m: "[32m2026-02-06 19:41:58[39m",
+    [34muser[39m: [34;4mApp\Models\User[39;24m {#6534
+      [34mid[39m: [35m3[39m,
+      [34mname[39m: "[32mAdmin Sistema[39m",
+      [34memail[39m: "[32madmin@teste.com[39m",
+      [34memail_verified_at[39m: "[32m2026-02-06 19:41:58[39m",
+      #[33mpassword[39m: "[32m$2y$12$TOACQzxolg1hg/VLwvnWe.nsKlfg2MYzSnhP2HeRs7EbdRD8HDRj6[39m",
+      #[33mremember_token[39m: "[32mUjBfB9rkPY[39m",
+      [34mcreated_at[39m: "[32m2026-02-06 19:41:58[39m",
+      [34mupdated_at[39m: "[32m2026-02-06 19:41:58[39m",
+    },
+  }
+
