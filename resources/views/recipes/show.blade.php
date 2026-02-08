@@ -88,14 +88,20 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-[3rem] p-10 shadow-sm border border-gray-50">
+            <div class="bg-white rounded-[3rem] p-10 shadow-sm border border-gray-100">
+                <h3 class="text-2xl font-black text-gray-900 mb-8">O que a comunidade achou?</h3>
+
                 @auth
-                <form action="{{ route('comments.store', $recipe) }}" method="POST" class="bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
+                @php
+                $hasRated = $recipe->ratings->contains('user_id', auth()->id());
+                @endphp
+
+                @if(!$hasRated)
+                <form action="{{ route('comments.store', $recipe) }}" method="POST" class="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 mb-10">
                     @csrf
                     <h4 class="text-lg font-bold text-gray-900 mb-4">Deixe sua opinião</h4>
 
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                        {{-- Campo de Nota --}}
                         <div class="md:col-span-1">
                             <label class="block text-sm font-bold text-emerald-800 mb-2">Sua Nota</label>
                             <select name="score" class="w-full border-gray-200 focus:border-emerald-500 focus:ring-emerald-500 rounded-2xl text-sm">
@@ -117,30 +123,38 @@
                         PUBLICAR AVALIAÇÃO
                     </button>
                 </form>
+                @else
+                <div class="bg-emerald-50 border border-emerald-100 p-6 rounded-[2rem] mb-10 flex items-center justify-center gap-3">
+                    <span class="text-2xl">✅</span>
+                    <p class="text-emerald-800 font-bold">Você já avaliou esta receita. Obrigado pela sua participação!</p>
+                </div>
+                @endif
+                @else
+                <div class="bg-gray-50 p-8 rounded-[2rem] border border-gray-100 text-center mb-10">
+                    <p class="text-gray-600">Deseja avaliar esta receita? <a href="{{ route('login') }}" class="text-emerald-600 font-black hover:underline">Faça login agora</a>.</p>
+                </div>
                 @endauth
 
-                <div class=" border-gray-50">
+                <div class="border-t border-gray-100 pt-10">
                     <h3 class="text-2xl font-black text-gray-900 mb-8">
                         Comentários <span class="text-emerald-600">({{ $recipe->comments->count() }})</span>
                     </h3>
                     <div class="space-y-6">
                         @forelse($recipe->comments as $comment)
                         <div class="flex gap-4 p-6 rounded-3xl border border-gray-50 bg-white shadow-sm">
-                            {{-- Avatar --}}
-                            <div class="w-10 h-10 rounded-full bg-emerald-100 flex-shrink-0 flex items-center justify-center font-bold text-emerald-600">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 flex-shrink-0 flex items-center justify-center font-bold text-gray-400">
                                 {{ substr($comment->user->name, 0, 1) }}
                             </div>
-
                             <div class="flex-1">
                                 <div class="flex justify-between items-center mb-1">
                                     <div class="flex items-center gap-2">
                                         <h4 class="font-bold text-gray-900 text-sm">{{ $comment->user->name }}</h4>
                                         @php
-                                        $userRating = $recipe->ratings->where('user_id', $comment->user_id)->first();
+                                        $rating = $recipe->ratings->where('user_id', $comment->user_id)->first();
                                         @endphp
-                                        @if($userRating)
+                                        @if($rating)
                                         <span class="text-xs bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded-lg font-bold flex items-center">
-                                            ⭐ {{ $userRating->score }}
+                                            ⭐ {{ $rating->score }}
                                         </span>
                                         @endif
                                     </div>

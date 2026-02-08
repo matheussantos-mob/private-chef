@@ -64,19 +64,19 @@ class RecipeController extends Controller
 
     public function storeComment(Request $request, Recipe $recipe)
     {
-        $request->validate([
+        $validated = $request->validate([
             'body' => 'required|string|min:5',
             'score' => 'required|integer|min:1|max:5',
         ]);
 
-        $recipe->comments()->create([
-            'user_id' => auth()->id(),
-            'body' => $request->body,
-        ]);
+        $recipe->comments()->updateOrCreate(
+            ['user_id' => auth()->id()],
+            ['body' => $validated['body']]
+        );
 
         $recipe->ratings()->updateOrCreate(
             ['user_id' => auth()->id()],
-            ['score' => $request->score]
+            ['score' => $validated['score']]
         );
 
         return redirect()->back()->with('success', 'Obrigado por avaliar esta receita!');

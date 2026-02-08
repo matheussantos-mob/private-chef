@@ -27,18 +27,33 @@
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
                         </div>
 
-                        <div>
+                        <div x-data="{ imagePreview: null }">
                             <x-input-label for="image" :value="__('Foto da Receita')" class="font-bold text-gray-700 ml-1" />
-                            <div class="mt-2 flex items-center justify-center w-full">
-                                <label for="image" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-200 border-dashed rounded-3xl cursor-pointer bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all">
-                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <svg class="w-8 h-8 mb-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                        <p class="mb-2 text-sm text-gray-500"><span class="font-bold">Clique para enviar</span> ou arraste a foto</p>
-                                        <p class="text-xs text-gray-400">PNG ou JPG (Máx. 2MB)</p>
-                                    </div>
-                                    <input id="image" name="image" type="file" class="hidden" accept="image/*" />
+
+                            <div class="mt-2 flex flex-col items-center justify-center w-full">
+                                <label for="image" class="flex flex-col items-center justify-center w-full h-44 border-2 border-gray-200 border-dashed rounded-[2.5rem] cursor-pointer bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all overflow-hidden relative">
+
+                                    <template x-if="!imagePreview">
+                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg class="w-8 h-8 mb-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            <p class="mb-2 text-sm text-gray-500"><span class="font-bold">Clique para enviar</span> ou arraste a foto</p>
+                                            <p class="text-xs text-gray-400">PNG ou JPG (Máx. 2MB)</p>
+                                        </div>
+                                    </template>
+
+                                    <template x-if="imagePreview">
+                                        <div class="w-full h-full">
+                                            <img :src="imagePreview" class="w-full h-full object-cover">
+                                            <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                                                <p class="text-white text-xs font-bold uppercase tracking-wider">Trocar Imagem</p>
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <input id="image" name="image" type="file" class="hidden" accept="image/*"
+                                        @change="const file = $event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = (e) => { imagePreview = e.target.result }; reader.readAsDataURL(file); } " />
                                 </label>
                             </div>
                             <x-input-error class="mt-2" :messages="$errors->get('image')" />
